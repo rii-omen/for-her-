@@ -1,0 +1,65 @@
+/* ================================================
+   BACKGROUND.CSS — Day/Night layers + night mode
+================================================ */
+
+/* grain noise */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+#bg-day {
+  position: fixed; inset: 0; z-index: -3;
+  background: linear-gradient(135deg, #fff0f8 0%, #f5eeff 50%, #fff0f8 100%);
+  transition: opacity 1.4s ease;
+}
+#bg-night {
+  position: fixed; inset: 0; z-index: -3;
+  background: radial-gradient(ellipse at top, #1a0533 0%, #2d1254 30%, #3b0764 60%, #1a0a2e 100%);
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+#starCanvas {
+  position: fixed; inset: 0; z-index: -2;
+  pointer-events: none; opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+/* ---- Night Mode Overrides ---- */
+body.night-mode { color: #f5d0fe; }
+
+body.night-mode .birthday-title {
+  background: linear-gradient(135deg, #f0abfc, #c084fc, #f0abfc) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+body.night-mode .subtitle           { color: #c084fc; }
+body.night-mode .sparkle-line       { background: linear-gradient(90deg, transparent, #c084fc, transparent); }
+body.night-mode .message-card       { background: rgba(30,10,60,0.82); border-color: rgba(168,85,247,0.55); }
+body.night-mode .message-heading    { color: #f0abfc; }
+body.night-mode .message-text       { color: #e9d5ff; }
+body.night-mode .photo-frame        { background: rgba(30,10,60,0.55); border-color: rgba(168,85,247,0.45); }
+body.night-mode .sv-title           { color: #f0abfc; }
+body.night-mode .sv-subtitle        { color: #c084fc; }
+body.night-mode .sv-frame           { background: rgba(30,10,60,0.6); }
+body.night-mode .mem-title          { color: #f0abfc; }
+body.night-mode .vframe-label       { color: rgba(216,180,254,0.75); }
+body.night-mode .vframe-circle,
+body.night-mode .vframe-cuboid      { background: rgba(30,10,60,0.55); }
+body.night-mode footer              { color: #f0abfc; }
+body.night-mode #curtain {
+  background: linear-gradient(160deg, rgba(26,5,51,0.95), rgba(45,18,84,0.95), rgba(26,5,51,0.95));
+}
+body.night-mode .curtain-sub        { color: #c084fc; }
+body.night-mode .curtain-hint       { color: rgba(192,132,252,0.65); }
+body.night-mode .cd-unit            { background: rgba(30,10,60,0.8); border-color: rgba(168,85,247,0.55); }
+body.night-mode .cd-label           { color: #c084fc; }
+body.night-mode .s2-card            { background: rgba(30,10,60,0.82); border-color: rgba(168,85,247,0.55); }
+body.night-mode .s2-title           { color: #f0abfc; }
+body.night-mode .s2-body            { color: #e9d5ff; }
+body.night-mode .music-player       { background: rgba(30,10,60,0.82); border-color: rgba(168,85,247,0.55); }
+body.night-mode .music-title        { color: #f0abfc; }
+body.night-mode .music-artist       { color: rgba(192,132,252,0.8); }

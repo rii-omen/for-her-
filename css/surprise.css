@@ -1,0 +1,207 @@
+/* ================================================
+   SURPRISE.CSS — Teaser curtain, countdown, surprises
+================================================ */
+
+#surprise-teaser { position: relative; overflow: hidden; }
+
+/* ---- Frosted curtain ---- */
+#curtain {
+  position: absolute; inset: 0; z-index: 40; min-height: 100vh;
+  backdrop-filter: blur(30px) saturate(1.3);
+  background: linear-gradient(160deg, rgba(255,228,242,0.93), rgba(237,218,255,0.93), rgba(255,228,242,0.93));
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 24px;
+  transition: opacity 1.4s ease, transform 1.4s ease;
+}
+#curtain.unlocked {
+  opacity: 0;
+  transform: scale(1.05) translateY(-28px);
+  pointer-events: none;
+}
+.curtain-ribbon {
+  position: absolute; top: 34px;
+  background: linear-gradient(90deg, var(--deep-pink), var(--purple));
+  color: #fff; font-family: 'Dancing Script', cursive; font-size: 1rem;
+  padding: 6px 48px; letter-spacing: 0.08em;
+  clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0% 50%);
+}
+.curtain-sparkle {
+  position: absolute; font-size: 1.4rem; pointer-events: none; opacity: 0.35;
+  animation: curtainSpark var(--cs) ease-in-out infinite var(--cd);
+}
+.curtain-emoji {
+  font-size: 4.5rem; margin-bottom: 8px;
+  animation: curtainBob 2.4s ease-in-out infinite;
+}
+.curtain-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-align: center; margin-bottom: 14px; line-height: 1.2;
+}
+.curtain-sub {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 1.05rem; color: var(--purple);
+  margin-bottom: 40px; text-align: center; transition: color 0.8s;
+}
+.curtain-hint {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 0.88rem; color: rgba(214,51,132,0.65);
+  text-align: center; animation: pulse 2s ease-in-out infinite;
+}
+
+/* ---- Countdown ---- */
+#countdown-wrap {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 26px;
+}
+.cd-unit {
+  background: rgba(255,255,255,0.74); backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(214,51,132,0.3); border-radius: 18px;
+  padding: 18px 22px; text-align: center; min-width: 78px;
+  box-shadow: 0 8px 28px rgba(214,51,132,0.14);
+  transition: background 0.8s, border-color 0.8s;
+}
+.cd-num {
+  font-family: 'Dancing Script', cursive; font-size: 2.7rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: block; line-height: 1;
+}
+.cd-label {
+  font-family: 'Lato', sans-serif; font-size: 0.68rem; color: var(--purple);
+  text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px;
+  transition: color 0.8s;
+}
+
+/* ---- Surprise section shell ---- */
+.surprise-section {
+  padding: 100px 24px;
+  display: flex; flex-direction: column; align-items: center; position: relative;
+}
+.surprise-heading {
+  font-family: 'Dancing Script', cursive; font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 10px; text-align: center;
+}
+.surprise-sub {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 1rem; color: var(--purple); margin-bottom: 40px;
+  text-align: center; transition: color 0.8s;
+}
+body.night-mode .surprise-sub { color: #c084fc; }
+
+/* ---- S1 video frame ---- */
+.s1-frame {
+  width: 100%; max-width: 760px; aspect-ratio: 16/9;
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(214,51,132,0.26), 0 0 0 3px rgba(255,110,180,0.4);
+  background: rgba(255,255,255,0.48); backdrop-filter: blur(10px); position: relative;
+}
+.s1-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.s1-placeholder {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+}
+.s1-ph-icon { font-size: 3.5rem; }
+.s1-ph-text {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 0.9rem; color: rgba(168,85,247,0.65); text-align: center; padding: 0 20px;
+}
+
+/* ---- S2 text card — flexible height ---- */
+.s2-card {
+  width: 100%; max-width: 640px;
+  background: rgba(255,255,255,0.74); backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,110,180,0.3); border-radius: 28px;
+  padding: 52px 46px; position: relative; overflow: visible;
+  box-shadow: 0 20px 60px rgba(214,51,132,0.12), inset 0 0 0 1px rgba(255,255,255,0.9);
+  transition: background 0.8s, border-color 0.8s;
+  word-wrap: break-word; overflow-wrap: break-word;
+}
+.s2-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  color: #fff; font-family: 'Dancing Script', cursive; font-size: 1rem;
+  padding: 5px 20px; border-radius: 30px; margin-bottom: 26px;
+}
+.s2-title {
+  font-family: 'Dancing Script', cursive; font-size: 2.1rem;
+  color: var(--deep-pink); margin-bottom: 20px;
+  text-align: center; transition: color 0.8s;
+}
+.s2-body {
+  font-family: 'Playfair Display', serif; font-size: 1.05rem;
+  line-height: 1.9; color: var(--text-dark);
+  text-align: center; transition: color 0.8s;
+}
+.s2-body p { margin-bottom: 18px; }
+.s2-body p:last-child { margin-bottom: 0; }
+.placeholder-text { color: rgba(168,85,247,0.55) !important; font-style: italic !important; }
+
+/* ---- S3 media + music ---- */
+.s3-wrap {
+  width: 100%; max-width: 760px;
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+}
+.s3-frame {
+  width: 100%; aspect-ratio: 4/3; border-radius: 24px; overflow: hidden; max-height: 500px;
+  box-shadow: 0 24px 80px rgba(168,85,247,0.26), 0 0 0 3px rgba(168,85,247,0.4);
+  background: rgba(255,255,255,0.48); backdrop-filter: blur(10px); position: relative;
+}
+.s3-frame img, .s3-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.s3-placeholder {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+}
+.s3-ph-icon { font-size: 3.5rem; }
+.s3-ph-text {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 0.9rem; color: rgba(168,85,247,0.65); text-align: center; padding: 0 20px;
+}
+
+/* ---- Music player ---- */
+.music-player {
+  width: 100%; max-width: 480px;
+  background: rgba(255,255,255,0.74); backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255,110,180,0.3); border-radius: 20px;
+  padding: 22px 28px; display: flex; flex-direction: column; gap: 14px;
+  box-shadow: 0 12px 40px rgba(214,51,132,0.14);
+  transition: background 0.8s, border-color 0.8s;
+}
+.music-info   { display: flex; align-items: center; gap: 14px; }
+.music-disc {
+  width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  animation: discSpin 4s linear infinite paused;
+}
+.music-disc.playing { animation-play-state: running; }
+.music-track  { flex: 1; }
+.music-title  { font-family: 'Dancing Script', cursive; font-size: 1.15rem; color: var(--deep-pink); display: block; transition: color 0.8s; }
+.music-artist { font-family: 'Lato', sans-serif; font-size: 0.78rem; color: rgba(168,85,247,0.72); display: block; margin-top: 2px; transition: color 0.8s; }
+.music-controls { display: flex; align-items: center; gap: 14px; }
+.music-bar { flex: 1; height: 4px; border-radius: 4px; background: rgba(214,51,132,0.18); overflow: hidden; }
+.music-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--deep-pink), var(--purple)); width: 0%; transition: width 0.5s linear; }
+.music-btn {
+  width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--deep-pink), var(--purple));
+  color: #fff; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(214,51,132,0.38); transition: transform 0.2s;
+}
+.music-btn:hover { transform: scale(1.1); }
+.music-note {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 0.8rem; color: rgba(168,85,247,0.55); text-align: center;
+}
+
+/* ---- Footer ---- */
+footer {
+  text-align: center; padding: 40px 24px 80px;
+  font-family: 'Dancing Script', cursive; font-size: 1.5rem;
+  color: var(--deep-pink); transition: color 0.8s;
+}

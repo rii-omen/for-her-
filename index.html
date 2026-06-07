@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday My Love 🌹</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets — order matters -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/background.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/bunny.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/video.css">
+  <link rel="stylesheet" href="css/surprise.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     BACKGROUND LAYERS
+═══════════════════════════════════════ -->
+<div id="bg-day"></div>
+<div id="bg-night"></div>
+<canvas id="starCanvas"></canvas>
+
+
+<!-- ═══════════════════════════════════════
+     LANDING SCREEN
+═══════════════════════════════════════ -->
+<div id="landing">
+  <div class="landing-ring"></div>
+  <div class="landing-ring"></div>
+
+  <!-- Heart button — click triggers triggerSurprise() via JS addEventListener -->
+  <button id="heartBtn" type="button">
+    <svg viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#ff9ed2"/>
+          <stop offset="100%" stop-color="#d63384"/>
+        </radialGradient>
+        <filter id="hglow">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <path
+        d="M65 105 C65 105 10 70 10 38 A28 28 0 0 1 65 25 A28 28 0 0 1 120 38 C120 70 65 105 65 105Z"
+        fill="url(#hg)" filter="url(#hglow)"/>
+      <ellipse cx="44" cy="42" rx="12" ry="7"
+        fill="rgba(255,255,255,0.28)" transform="rotate(-30 44 42)"/>
+    </svg>
+    <span class="click-label">✨ Click Me ✨</span>
+  </button>
+
+  <div class="landing-cat">🐱</div>
+
+  <div class="landing-star" style="top:17%;left:14%;font-size:1.4rem;--ts:2s;--td:0s">✦</div>
+  <div class="landing-star" style="top:24%;right:17%;font-size:1rem;--ts:2.5s;--td:.5s">✦</div>
+  <div class="landing-star" style="bottom:21%;left:21%;font-size:1.2rem;--ts:1.8s;--td:1s">✦</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     EXPLOSION LAYER
+═══════════════════════════════════════ -->
+<div id="explosion"></div>
+
+
+<!-- ═══════════════════════════════════════
+     CSS BUNNY — LEFT MARGIN
+═══════════════════════════════════════ -->
+<div id="bunny">
+  <div class="bunny-ear left"><div class="bunny-ear-inner"></div></div>
+  <div class="bunny-ear right"><div class="bunny-ear-inner"></div></div>
+  <div class="bunny-face">
+    <div class="bunny-eye left"></div>
+    <div class="bunny-eye right"></div>
+    <div class="bunny-cheek left"></div>
+    <div class="bunny-cheek right"></div>
+    <div class="bunny-nose"></div>
+    <div class="bunny-mouth" id="bunnyMouth"></div>
+  </div>
+  <div class="bunny-body"></div>
+  <div class="bunny-tail"></div>
+</div>
+
+
+<!--
+  AUDIO — HOW TO ADD MUSIC:
+  1. Put your .mp3 in assets/audio/
+  2. Change the src below: src="assets/audio/your-song.mp3"
+  3. Update the music-title and music-artist text further down.
+-->
+<audio id="bgAudio" loop>
+  <source src="assets/audio/.your-songmp3" type="audio/mpeg">
+</audio>
+
+
+<!-- ═══════════════════════════════════════
+     MAIN CONTENT (hidden until heart click)
+═══════════════════════════════════════ -->
+<div id="mainContent" style="display:none;">
+
+  <!-- Drifting decorative hearts -->
+  <div class="deco-heart" style="left:5%;top:30%;--fd:4s">💗</div>
+  <div class="deco-heart" style="right:7%;top:45%;--fd:5.5s">💜</div>
+  <div class="deco-heart" style="left:11%;top:62%;--fd:3.5s">🌸</div>
+  <div class="deco-heart" style="right:4%;top:77%;--fd:6s">💕</div>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       HERO SECTION
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="hero">
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+
+    <!-- "A message just for you" subtitle REMOVED as requested -->
+    <h1 class="birthday-title">Happy Birthday,<br>My Love 💖</h1>
+
+    <!--
+      PHOTO FRAMES — HOW TO ADD PHOTOS:
+      Inside any .photo-frame div, replace the placeholder content with:
+      <img src="assets/images/your-photo.jpg" alt="photo"
+           style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+    -->
+    <div class="photo-frames">
+
+      <div class="photo-frame frame-circle" data-label="my anime cutie 💜">
+        <img src="photo1.jpg" alt="photo"
+     style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+        <span class="frame-corner tl">✦</span>
+        <span class="frame-corner br">✦</span>
+      </div>
+
+      <div class="photo-frame frame-rect-tall" data-label="omg my my">
+        <img src="photo2.jpg" alt="photo"
+     style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+        <span class="frame-corner tl">✦</span>
+        <span class="frame-corner br">✦</span>
+      </div>
+
+      <div class="photo-frame frame-rect" data-label="soo cute🎀">
+        <img src="photo3.jpg" alt="photo"
+     style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+        <span class="frame-corner tl">✦</span>
+        <span class="frame-corner br">✦</span>
+      </div>
+
+      <div class="photo-frame frame-circle" data-label="Lovely💕">
+        <img src="photo4.jpg" alt="photo"
+     style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+        <span class="frame-corner tl">✦</span>
+        <span class="frame-corner br">✦</span>
+      </div>
+
+    </div><!-- .photo-frames -->
+
+    <div class="sparkle-divider">
+      <div class="sparkle-line"></div>
+      <span>✨ 🌹 ✨</span>
+      <div class="sparkle-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SCROLL VIDEO SECTION (middle)
+       HOW TO ADD YOUR VIDEO:
+       1. Put your file in assets/video/
+       2. Change: src="assets/video/your-video.mp4"
+       The placeholder disappears once the video loads.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="scroll-video-section">
+    <div class="dot-grid top-left"></div>
+    <div class="dot-grid bot-right"></div>
+
+    <!-- 🌸 flower emoji | "Press and play" text -->
+    <p class="sv-title">🌸 A little something for you</p>
+    <p class="sv-subtitle">Press and play 💕</p>
+
+    <div class="sv-sticky">
+      <div class="sv-track">
+        <div class="sv-frame" id="svFrame">
+          <video id="mainVid" controls playsinline preload="metadata">
+            <source src="forher.mp4" type="video/mp4">
+          </video>
+          <div class="sv-placeholder" id="svPlaceholder">
+            <div class="sv-ph-icon">🎬</div>
+            <div class="sv-ph-text">
+              Put your video in <code>assets/video/</code> and
+              update the <code>src</code> above 💕
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       BIRTHDAY MESSAGE CARD
+       Auto-resizes — add as many <p> tags as you like.
+       Heading font: Great Vibes (elegant calligraphic)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="message-section">
+    <div class="message-card">
+      <p class="message-heading">letter from my heart 💌</p>
+      <div class="message-text">
+        <p>Happy Birthday, my love. 🌹</p>
+        <p>If I could give you one thing today, it would be the ability to see yourself through my eyes — because then you'd know how truly special and beautiful you are to me.</p>
+        <p>You're not just my girlfriend, you're my happiness, my peace, and my favorite person. I'm so grateful for you every single day. ❤️</p>
+        <p> And it today's is your special day! your birthday one of the most wonderful day in the history for me (˶˃ ᵕ ˂˶) ♡ , Happy birthday to you mommy~ <br>
+          Happy birthday to my mommy..🎶 Happy birthday to my Farheen 💗  
+        <br> oh~ my mommy i just really wish that i could have just hug you real tight in my arms this right momment and spam kisses over all your face the whole night 𑣲⋆..I know its your birthday but tbh i Probably Would have more excited then you..
+        *muah 💋 my mommey do you even realise how beautiful you are to me ?.. i still remember the day i saw your face from the first time damn- i was all sleepless that night.. i kept on thinking oh~😮she is .....PRETTY🤍 so there she is... so thats how she looks huh..my clone🤍.. but then i could't have known that god had a really different plan for us..and yes i never showed it much back then but yes I used to dream about dating you..about you being my closest , about me being the only person you could ever need ..want..i became sm attached with you in so lil time...and how could't i ? when its you 💗 the love of my chosen by god for me hehe i remember those lyrics again "This girl she had to be~ an angel sent from heaven just for me🎶"..🥹 exactly that what my heart felt while getting closer to you more and more .. ik i am your boyfriend now but sometimes ahm i still remember and miss those time when i watched my heart sinking deep in the ocean of your love..and its not like it tried to save itself while sinking .. no it just felt my heart letting itself all free like at it like-this is it , this is where i always had belonged , this is my home ˚˖𓍢ִ໋🦢˚, this is my space.. the place where i had always belonged ♥︎ .. oh farheen.. my beautiful queen, my greatest dream thank you! sooooooo much for coming into my life ฅ^>⩊<^ ฅ ..and then making my dream come true.. i love you sm inside and out ꨄ, i love your face those pretty cute cheeks and those hairs of yours with the golden flow ~ִֶָ. ..𓂃 ࣪ ִֶָ🦋་༘࿐and your eyes that takes my stress away from the away miles.. ݁₊ ⊹ . ݁˖ . ݁
+        hehe~ i also remember the times when my heart- uhm no when the whole me had been knocked out by your beauty( ꩜ ᯅ ꩜;)₊˚⊹♡ ..idk what had gotten into me today but i am in so writing mode so i will right<br>
+
+        Farheen, your eyes shine brighter than the finest jewels ever could ✮⋆˙<br>
+        holding galaxies of beauty that no treasure on Earth can match
+<br>
+Your face? Its like Even the moon would blush in your presence,
+its glow would feels pale beside your gentle radiance
+And your smile...
+it warms my heart in ways the sun never could,
+turning my darkest days into golden mornings
+<br>
+To me, your soul is a sacred place,
+a sanctuary of love, peace, and wonder
+where my heart always feels like ahome
+<br>
+You feel like a little angel who somehow wandered onto Earth,
+bringing kindness, beauty, and magic wherever you go
+<br>
+And if preciousness could take a form,
+it would be you, my love ૮ ྀིᴗ͈ . ᴗ͈ ྀིა
+more valuable than moonlight,
+more rare than the stars,
+and more beautiful than every dream I've ever had,
+my dear farheen 💗
+
+oh i wann sing so had happy birthday to you my little angel 🎶 happy birthday to youuu~ my farheen 💜 happy birthday to youu my cutie pie happy birthday too („• ֊ •„) my kitty ⚞^. .^⚟💗ྀི 
+<br>
+
+uhm i have my future self did't chocked the plan i had for this time cand you got a vm from me singing happy birthday to you ˖ ݁♬⋆.˚𝄞 , hehe ฅ^>⩊<^ ฅ 
+no matter how much i type about your beauty of your soul or your face or your waist i will never be tired cuz you will always be my taste 💋. 
+<br>
+farheen on this day i want you to be happy and only happy happy happy and remember that how heavenly you are .. ik we have faced downfall in our relationship ik i have hurted you at times and i am always here to be sorry and to atone for it always but i will never stop loving you until my last breath and even if i die and even in another life i will always pray to god to make me with this cute soul again and again in my every life 𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ
+<br>
+Always...always remember that i am forever yours and for ever yours only.. 
+uhm i will try my best to but 
+ik you would't let me send a gift to you offline irl gift so instad of that i put my whole heart and soul coding this website for months form what i have learned so far just for this day i hope i did't messed up the components and i hope i made it ready on time and i hope you like it (˶˃⤙˂˶)
+Agh why can't i just kiss you aghh ..... okey me will wait for that day this rishi can wait forever with you..
+
+           Have the most wonderful birthday. 🎂✨</p>
+        <!-- ADD MORE <p> TAGS HERE — card grows automatically -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       MEMORY VIDEO FRAMES
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="memory-section">
+    <p class="mem-title"> Our moments 🤍</p>
+    <div class="memory-frames">
+
+      <div class="vframe-circle">
+  <img src="memory1.jpg"
+     style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+  <span class="vf-corner tl">✦</span>
+  <span class="vf-corner br">✦</span>
+</div>
+
+      <div class="vframe-cuboid">
+  <video src="memory2.mp4" controls playsinline
+         style="width:100%;height:100%;object-fit:cover;border-radius:20px"></video>
+  <span class="vf-corner tl">✦</span>
+  <span class="vf-corner tr">✦</span>
+  <span class="vf-corner bl">✦</span>
+  <span class="vf-corner br">✦</span>
+</div>
+
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SURPRISE TEASER — 3 locked sections
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <div id="surprise-teaser">
+
+    <!-- Frosted curtain (dissolves when countdown hits 0) -->
+    <div id="curtain">
+      <div class="curtain-ribbon">🎀 Something Special Awaits 🎀</div>
+
+      <div class="curtain-sparkle" style="top:11%;left:8%;--cs:3.2s;--cd:0s">✨</div>
+      <div class="curtain-sparkle" style="top:19%;right:9%;--cs:2.6s;--cd:.7s">💜</div>
+      <div class="curtain-sparkle" style="bottom:17%;left:12%;--cs:4s;--cd:.3s">🌸</div>
+      <div class="curtain-sparkle" style="bottom:21%;right:7%;--cs:3s;--cd:1.1s">💗</div>
+      <div class="curtain-sparkle" style="top:50%;left:4%;--cs:2.8s;--cd:.5s">⭐</div>
+      <div class="curtain-sparkle" style="top:54%;right:5%;--cs:3.6s;--cd:.9s">🌟</div>
+
+      <div class="curtain-emoji">🎁</div>
+      <h2 class="curtain-title">Wait for the Surprise,<br>Pookie 🐰💕</h2>
+      <p class="curtain-sub">Something magical is locked until the right moment…</p>
+
+      <div id="countdown-wrap">
+        <div class="cd-unit">
+          <span class="cd-num" id="cdDays">--</span>
+          <span class="cd-label">Days</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cdHours">--</span>
+          <span class="cd-label">Hours</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cdMins">--</span>
+          <span class="cd-label">Minutes</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-num" id="cdSecs">--</span>
+          <span class="cd-label">Seconds</span>
+        </div>
+      </div>
+
+      <p class="curtain-hint">🔒 June 8, 2026 · 12:00 PM IST 🔒</p>
+    </div><!-- #curtain -->
+
+
+    <!-- ──────────────────────────────────
+         SURPRISE 1 — VIDEO
+         Replace assets/video/surprise-video.mp4 with your file.
+    ────────────────────────────────── -->
+    <section class="surprise-section"
+      style="background:linear-gradient(180deg,transparent,rgba(255,214,231,.14) 40%,transparent)">
+      <p class="surprise-heading">🎬 Surprise One</p>
+      <p class="surprise-sub">A video, just for you — play it when you're ready 💕</p>
+      <div class="s1-frame">
+        <video id="s1Vid" controls playsinline preload="metadata">
+          <source src="assets/video/surprise-video.mp4" type="video/mp4">
+        </video>
+        <div class="s1-placeholder" id="s1Placeholder">
+          <div class="s1-ph-icon">🎬</div>
+          <div class="s1-ph-text">
+            Put your surprise video in <code>assets/video/</code>
+            and update the <code>src</code> above 💜
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sparkle-divider" style="padding:0 40px">
+      <div class="sparkle-line"></div>
+      <span>💗 💜 💗</span>
+      <div class="sparkle-line"></div>
+    </div>
+
+
+    <!-- ──────────────────────────────────
+         SURPRISE 2 — TEXT MESSAGE
+         Replace placeholder <p> tags with your own words.
+         Card grows automatically with any amount of text.
+    ────────────────────────────────── -->
+    <section class="surprise-section"
+      style="background:linear-gradient(180deg,transparent,rgba(237,233,254,.18) 40%,transparent)">
+      <p class="surprise-heading">💌 Surprise Two</p>
+      <p class="surprise-sub">Words straight from the heart ✨</p>
+      <div class="s2-card">
+        <div style="text-align:center;margin-bottom:22px">
+          <span class="s2-tag">📝 A note for you</span>
+        </div>
+        <p class="s2-title">My dearest Pookie,</p>
+        <div class="s2-body">
+          <!-- ✏️ Replace these placeholder lines with your message -->
+          <p class="placeholder-text">[ Write your personal message here — pour your heart out. She deserves every word. 🌹 ]</p>
+          <p class="placeholder-text">[ A memory, a promise, a dream — make it entirely yours. ]</p>
+          <p class="placeholder-text">[ End with something that makes her smile. ]</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="sparkle-divider" style="padding:0 40px">
+      <div class="sparkle-line"></div>
+      <span>🌸 🌹 🌸</span>
+      <div class="sparkle-line"></div>
+    </div>
+
+
+    <!-- ──────────────────────────────────
+         SURPRISE 3 — PHOTO/VIDEO + MUSIC
+         PHOTO: uncomment <img> and fill src
+         VIDEO: uncomment <video> and fill src
+         MUSIC: update <audio> src above + title/artist below
+    ────────────────────────────────── -->
+    <section class="surprise-section"
+      style="background:linear-gradient(180deg,transparent,rgba(255,214,231,.14) 40%,transparent)">
+      <p class="surprise-heading">🎵 Surprise Three</p>
+      <p class="surprise-sub">A moment, a memory, and a song 🌙💜</p>
+
+      <div class="s3-wrap">
+        <div class="s3-frame">
+          <!-- Uncomment ONE of these when ready: -->
+          <!-- <img src="assets/images/your-photo.jpg" alt="us"> -->
+          <!-- <video src="assets/video/your-moment.mp4" controls playsinline></video> -->
+          <div class="s3-placeholder">
+            <div class="s3-ph-icon">📸</div>
+            <div class="s3-ph-text">
+              Add your favourite photo or video here.<br>
+              See the HTML comments above 💕
+            </div>
+          </div>
+        </div>
+
+        <div class="music-player">
+          <div class="music-info">
+            <div class="music-disc" id="musicDisc">🎵</div>
+            <div class="music-track">
+              <!-- UPDATE THESE to match your song -->
+              <span class="music-title" id="musicTitle">Your Song 🎵</span>
+              <span class="music-artist">— Your favourite artist</span>
+            </div>
+          </div>
+          <div class="music-controls">
+            <button class="music-btn" id="musicBtn" type="button">▶</button>
+            <div class="music-bar">
+              <div class="music-bar-fill" id="musicBarFill"></div>
+            </div>
+          </div>
+          <p class="music-note">
+            Put your song in <code>assets/audio/</code>, update the
+            &lt;audio&gt; src above, then change the title &amp; artist here 🎶
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+  </div><!-- #surprise-teaser -->
+
+
+  <footer>
+    Made with 💗 just for you &nbsp;·&nbsp; Forever yours 🌙
+  </footer>
+
+</div><!-- #mainContent -->
+
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS — loaded in correct order
+     NO type="module", NO onclick attributes
+     All functions are global on window scope
+═══════════════════════════════════════ -->
+<script src="js/stars.js"></script>
+<script src="js/bunny.js"></script>
+<script src="js/landing.js"></script>
+<script src="js/countdown.js"></script>
+<script src="js/music.js"></script>
+<script src="js/scroll.js"></script>
+
+<!-- Wire up the heart button AFTER all JS is loaded -->
+<script>
+  document.getElementById('heartBtn').addEventListener('click', function() {
+    triggerSurprise();
+  });
+  document.getElementById('musicBtn').addEventListener('click', function() {
+    toggleMusic();
+  });
+</script>
+
+<audio id="bg-audio" loop>
+  <source src="background.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+  const video = document.getElementById('mainVid'); // matches your existing video id
+  let hasPlayed = false;
+
+  function startAudio() {
+    if (!hasPlayed) {
+      audio.play();
+      hasPlayed = true;
+    }
+  }
+
+  document.addEventListener('touchstart', startAudio);
+  document.addEventListener('click', startAudio);
+
+  // Pause music when video plays
+  video.addEventListener('play', () => {
+    audio.pause();
+  });
+
+  // Resume music when video is paused or ends
+  video.addEventListener('pause', () => {
+    if (hasPlayed) audio.play();
+  });
+
+  video.addEventListener('ended', () => {
+    if (hasPlayed) audio.play();
+  });
+</script>
+
+
+
+</body>
+</html>

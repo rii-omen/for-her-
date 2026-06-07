@@ -1,0 +1,118 @@
+/* ================================================
+   BUNNY.CSS — Left-margin CSS bunny
+   Natural smile: locks at gentle arc (h≤7px) at 55% scroll
+================================================ */
+
+#bunny {
+  position: fixed;
+  left: 20px; top: 50%;
+  transform: translateY(-50%);
+  width: 80px; height: 100px;
+  z-index: 20; display: none;
+  animation: bunnyFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 6px 20px rgba(255,110,180,0.3));
+}
+
+.bunny-ear {
+  width: 20px; height: 50px;
+  background: #fff; border: 2px solid #ffb6c1;
+  border-radius: 50% 50% 0 0;
+  position: absolute; top: -30px;
+  transition: background 0.5s, border-color 0.5s;
+}
+.bunny-ear.left  { left: 15px;  transform: rotate(-15deg); }
+.bunny-ear.right { right: 15px; transform: rotate(15deg); }
+
+.bunny-ear-inner {
+  width: 10px; height: 32px;
+  background: #ffb6c1; border-radius: 50% 50% 0 0;
+  position: absolute; top: 6px; left: 50%;
+  transform: translateX(-50%); opacity: 0.7;
+  transition: background 0.5s;
+}
+
+.bunny-face {
+  width: 80px; height: 70px;
+  background: #fff; border: 2px solid #ffb6c1;
+  border-radius: 50%; position: absolute; top: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: background 0.5s, border-color 0.5s;
+}
+
+.bunny-eye {
+  width: 8px; height: 10px;
+  background: #2d1a2e; border-radius: 50%;
+  position: absolute; top: 24px;
+  transition: background 0.5s;
+}
+.bunny-eye::after {
+  content: ''; position: absolute;
+  width: 2.5px; height: 2.5px;
+  background: #fff; border-radius: 50%;
+  top: 2px; left: 2px;
+}
+.bunny-eye.left  { left: 19px; }
+.bunny-eye.right { right: 19px; }
+
+.bunny-cheek {
+  width: 13px; height: 8px;
+  background: #ffb6c1; border-radius: 50%;
+  position: absolute; top: 35px; opacity: 0.55;
+}
+.bunny-cheek.left  { left: 8px; }
+.bunny-cheek.right { right: 8px; }
+
+.bunny-nose {
+  width: 7px; height: 5px;
+  background: #f06292; border-radius: 50%;
+  position: absolute; top: 34px;
+  left: 50%; transform: translateX(-50%);
+}
+
+/*
+  MOUTH — natural gentle resting smile
+  JS drives width/height/top via inline style.
+  Max height = 7px. Smile locks at 55% scroll.
+  border-radius keeps it a soft arc, never a wide grin.
+*/
+.bunny-mouth {
+  position: absolute;
+  top: 42px; left: 50%;
+  transform: translateX(-50%);
+  width: 13px; height: 0px;
+  border: none;
+  border-bottom: 2px solid #9b5b6e;
+  border-left:   2px solid transparent;
+  border-right:  2px solid transparent;
+  border-radius: 0 0 50% 50%;
+  transition:
+    width  0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    top    0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bunny-body {
+  width: 60px; height: 40px;
+  background: #fff; border: 2px solid #ffb6c1;
+  border-radius: 50% 50% 40% 40%;
+  position: absolute; top: 68px; left: 10px;
+  transition: background 0.5s, border-color 0.5s;
+}
+
+.bunny-tail {
+  width: 15px; height: 15px;
+  background: #fff; border: 2px solid #ffb6c1;
+  border-radius: 50%; position: absolute;
+  top: 75px; right: 3px;
+  transition: background 0.5s, border-color 0.5s;
+}
+
+/* Night mode */
+body.night-mode .bunny-face     { background: #f9e7ff; border-color: #d8b4fe; }
+body.night-mode .bunny-ear      { background: #f9e7ff; border-color: #d8b4fe; }
+body.night-mode .bunny-body     { background: #f9e7ff; border-color: #d8b4fe; }
+body.night-mode .bunny-tail     { background: #f9e7ff; border-color: #d8b4fe; }
+body.night-mode .bunny-eye      { background: #7c3aed; }
+body.night-mode .bunny-ear-inner{ background: #d8b4fe; }
+body.night-mode .bunny-mouth    { border-bottom-color: #a78bfa; }
