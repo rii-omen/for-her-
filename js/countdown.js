@@ -2,7 +2,7 @@
    COUNTDOWN.JS — June 8 2026 12:00 PM IST
    IST = UTC+5:30 → UTC target = June 8 2026 06:30:00
 ================================================ */
-var TARGET_UTC = Date.UTC(2026, 5, 8, 6, 30, 0);
+var TARGET_UTC = Date.UTC(2026, 5, 8, 14, 30, 0);
 var cdDone     = false;
 
 function pad2(n) { return String(n).padStart(2, '0'); }
